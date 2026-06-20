@@ -1,5 +1,6 @@
 package com.kyant.backdrop.catalog.destinations
 
+import android.content.Intent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -19,12 +20,15 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.platform.LocalContext
 import com.kyant.backdrop.catalog.CatalogDestination
+import com.kyant.backdrop.catalog.glassview.GlassViewDemoActivity
 
 @Composable
 fun HomeContent(onNavigate: (CatalogDestination) -> Unit) {
     val isLightTheme = !isSystemInDarkTheme()
     val contentColor = if (isLightTheme) Color.Black else Color.White
+    val context = LocalContext.current
 
     Column(
         Modifier
@@ -52,6 +56,11 @@ fun HomeContent(onNavigate: (CatalogDestination) -> Unit) {
             ListItem({ onNavigate(CatalogDestination.LockScreen) }, "Lock screen (SDF texture)")
             ListItem({ onNavigate(CatalogDestination.ControlCenter) }, "Control center")
             ListItem({ onNavigate(CatalogDestination.Magnifier) }, "Magnifier")
+
+            Subtitle("Custom View (no library)")
+            ListItem({
+                context.startActivity(Intent(context, GlassViewDemoActivity::class.java))
+            }, "Glass Effect — Custom View")
 
             Subtitle("Experiments")
             ListItem({ onNavigate(CatalogDestination.GlassPlayground) }, "Glass playground")
